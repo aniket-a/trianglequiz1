@@ -1,23 +1,28 @@
-const quizForm = document.querySelector(".quiz-form");
-const submitBtn = document.querySelector("#submit-answer-btn");
-const output1 = document.querySelector("#output");
-const correctAnswers = ["90 degree" , "right angled"];
-function calculateScore(){
-    let score = 0;
-    let index = 0;
-    const formResults = new FormData(quizForm);
 
-    for(let value of formResults.values())
-    {
-     console.log(value)
-        if(value === correctAnswers[index])
-        {
-            score = score + 1 ;
-            console.log(score);
-        }
-            index = index + 1 ;
+const quizForm = document.querySelector("#quizForm");
+const questions = document.querySelectorAll(".qs");
+const finalScore = document.querySelector("#finalScore");
+const submitQuiz = document.querySelector("#submitQuiz");
+
+const correctAns = ["option1", "option2", "option1", "option1", "option1", "option2", "option2", "option3", "option3", "option3"];
+let score= 0;
+
+quizForm.addEventListener('submit', (e)=>{
+    
+    e.preventDefault();
+
+    const data = new FormData(quizForm);
+    let index=0;
+    for(let entry of data){
+       if(entry[1] == correctAns[index]){
+        questions[index].style.backgroundColor = "lightgreen";
+        score++;
+       }
+       else{
+        questions[index].style.backgroundColor = "pink";
+       }
+        index++;
     }
-        
-        output1.innerText = "your score is: " + score;
-    }                 
-submitBtn.addEventListener("click", calculateScore);
+    finalScore.innerText = score;
+    submitQuiz.style.display= "none";
+});
